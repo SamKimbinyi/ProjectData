@@ -6,6 +6,8 @@ authors = ["Sam Kimbinyi <sam@kimbinyi.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+tweepy = "^4.10.1"
+prefect = "^2.6.4"
 
 [tool.poetry.dev-dependencies]
 
