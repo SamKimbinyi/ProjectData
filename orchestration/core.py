@@ -8,7 +8,9 @@ from scrapers.twitter import search_tweet, parse_tweet_json
 
 @flow(name="Twitter")
 async def get_twitter(search_term):
-    return [parse_tweet_json(x._json) for x in twitter_api_search(search_term)]
+    raw_tweets = twitter_api_search(search_term)
+    cleaned_tweets = parse_tweets(raw_tweets)
+    return cleaned_tweets
 
 
 @task(name="Search Tweet")
@@ -19,5 +21,8 @@ def twitter_api_search(search_term):
     api = tweepy.API(auth)
 
     tweets = search_tweet(search_term, api)
-    print(tweets)
     return tweets
+
+@task(name="Parse Tweets")
+def parse_tweets(tweets):
+   return [parse_tweet_json(x._json) for x in tweets]
